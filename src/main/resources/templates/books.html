@@ -2,162 +2,209 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Danh sách sách</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+  <title>Danh sách sách</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-        body {
-            background-color: #f5f5f5;
-            padding: 2rem;
-        }
+    body {
+      background: linear-gradient(to right, #f1f2f6, #dfe4ea);
+      padding: 2rem;
+      min-height: 100vh;
+    }
 
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 2rem;
-            text-align: center;
-            font-size: 2rem;
-        }
+    h2 {
+      color: #2d3436;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-size: 2rem;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            overflow: hidden;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
 
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
 
-        th {
-            background-color: #3498db;
-            color: white;
-            font-weight: 600;
-        }
+    th {
+      background-color: #0984e3;
+      color: white;
+      font-weight: 600;
+    }
 
-        tr:hover {
-            background-color: #f8f9fa;
-        }
+    tr:hover {
+      background-color: #f0f3f5;
+    }
 
-        button, .button {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background-color 0.3s;
-        }
+    button, .button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.3s ease;
+    }
 
-        button[type="submit"] {
-            background-color: #2ecc71;
-            color: white;
-        }
+    button[type="submit"] {
+      background-color: #00b894;
+      color: white;
+    }
 
-        button[type="submit"]:hover {
-            background-color: #27ae60;
-        }
+    button[type="submit"]:hover {
+      background-color: #019875;
+    }
 
-        a {
-            text-decoration: none;
-            color: #3498db;
-            margin: 0 0.5rem;
-        }
+    a {
+      text-decoration: none;
+      color: #0984e3;
+      margin: 0 0.5rem;
+    }
 
-        a:hover {
-            color: #2980b9;
-        }
+    a:hover {
+      color: #0652dd;
+    }
 
-        a[href*="edit"] {
-            color: #f39c12;
-        }
+    a[href*="edit"] {
+      color: #f39c12;
+    }
 
-        a[href*="delete"] {
-            color: #e74c3c;
-        }
+    a[href*="delete"] {
+      color: #e74c3c;
+    }
 
-        .add-book {
-            display: inline-block;
-            margin-top: 2rem;
-            background-color: #3498db;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-        }
+    .add-book {
+      display: inline-block;
+      margin: 1rem 0 3rem 0;
+      background-color: #0984e3;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-        .add-book:hover {
-            background-color: #2980b9;
-            color: white;
-        }
+    .add-book:hover {
+      background-color: #0652dd;
+    }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
+    hr {
+      margin: 60px 0 20px 0;
+      border: 0;
+      height: 2px;
+      background: #dfe6e9;
+    }
 
-            th, td {
-                padding: 0.75rem;
-            }
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
 
-            button, .button {
-                padding: 0.4rem 0.8rem;
-            }
-        }
-    </style>
+      table, th, td {
+        font-size: 0.9rem;
+      }
+
+      button, .button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- DEBUG: Hiển thị quyền hiện tại -->
-    <p sec:authentication="principal.authorities"></p>
+  <p sec:authentication="principal.authorities"></p>
 
-    <h2>Danh sách sách</h2>
+  <h2>📚 Danh sách sách</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tiêu đề</th>
+        <th>Tác giả</th>
+        <th>Thể loại</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="book : ${books}">
+        <td th:text="${book.title}">Title</td>
+        <td th:text="${book.author}">Author</td>
+        <td th:text="${book.category}">Category</td>
+        <td>
+          <div sec:authorize="hasRole('USER')">
+            <form
+              th:action="@{/books/borrow/{id}(id=${book.id})}"
+              method="post"
+              style="display: inline"
+            >
+              <button type="submit">Mượn</button>
+            </form>
+          </div>
+
+          <div sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/books/edit/{id}(id=${book.id})}">Sửa</a> |
+            <a th:href="@{/books/delete/{id}(id=${book.id})}">Xóa</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/books/add}" class="add-book">+ Thêm sách mới</a>
+  </div>
+
+  <div sec:authorize="hasRole('USER')">
+    <hr />
+    <h2>📖 Danh sách mượn</h2>
 
     <table>
-        <thead>
-            <tr>
-                <th>Tiêu đề</th>
-                <th>Tác giả</th>
-                <th>Thể loại</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="book : ${books}">
-                <td th:text="${book.title}">Title</td>
-                <td th:text="${book.author}">Author</td>
-                <td th:text="${book.category}">Category</td>
-                <td>
-                    <div sec:authorize="hasRole('USER')">
-                        <form
-                            th:action="@{/books/borrow/{id}(id=${book.id})}"
-                            method="post"
-                            style="display: inline"
-                        >
-                            <button type="submit">Mượn</button>
-                        </form>
-                    </div>
-
-                    <div sec:authorize="hasRole('ADMIN')">
-                        <a th:href="@{/books/edit/{id}(id=${book.id})}">Sửa</a> |
-                        <a th:href="@{/books/delete/{id}(id=${book.id})}">Xóa</a>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Tên sách</th>
+          <th>Thời gian mượn</th>
+          <th>Thời gian trả</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="borrow : ${borrows}">
+          <td th:text="${borrow.book.title}">Tiêu đề</td>
+          <td th:text="${#temporals.format(borrow.borrowTime, 'dd/MM/yyyy HH:mm')}">Thời gian mượn</td>
+          <td>
+            <div th:if="${borrow.returnTime == null}">
+              <form
+                th:action="@{/books/return/{id}(id=${borrow.id})}"
+                method="post"
+                style="display: inline"
+              >
+                <button type="submit">Trả sách</button>
+              </form>
+            </div>
+            <div
+              th:if="${borrow.returnTime != null}"
+              th:text="${#temporals.format(borrow.returnTime, 'dd/MM/yyyy HH:mm')}"
+            >
+              Thời gian trả
+            </div>
+          </td>
+        </tr>
+      </tbody>
     </table>
-
-    <div sec:authorize="hasRole('ADMIN')">
-        <a th:href="@{/books/add}" class="add-book">Thêm sách mới</a>
-    </div>
+  </div>
 </body>
 </html>

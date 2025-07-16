@@ -10,35 +10,48 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         body {
-            background-color: #f5f5f5;
-            height: 100vh;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eb74b6, #c353f3);
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .login-container {
             background-color: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h2 {
             color: #2c3e50;
             text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            font-size: 1.9rem;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         label {
@@ -50,27 +63,28 @@
 
         input {
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #ddd;
-            border-radius: 4px;
+            padding: 0.9rem;
+            border: 1.5px solid #ccc;
+            border-radius: 6px;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: 0.3s ease;
         }
 
         input:focus {
-            outline: none;
             border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+            outline: none;
         }
 
         button {
             width: 100%;
             padding: 1rem;
-            background-color: #3498db;
+            background-color: #db34bc;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -81,11 +95,12 @@
 
         .error-message {
             color: #e74c3c;
-            background-color: #fdf0ed;
-            padding: 0.8rem;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
+            background-color: #fdecea;
+            padding: 0.9rem;
+            border-radius: 6px;
+            margin-bottom: 1.2rem;
             text-align: center;
+            border-left: 5px solid #e74c3c;
             display: none;
         }
 
@@ -95,16 +110,15 @@
 
         @media (max-width: 480px) {
             .login-container {
-                margin: 1rem;
-                padding: 1.5rem;
+                padding: 1.8rem;
             }
 
             h2 {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
 
             input, button {
-                padding: 0.7rem;
+                padding: 0.8rem;
             }
         }
     </style>
@@ -112,22 +126,22 @@
 <body>
     <div class="login-container">
         <h2>Đăng nhập</h2>
-        
+
         <div th:if="${param.error}" class="error-message show">
-            Tên đăng nhập hoặc mật khẩu không đúng
+            ⚠ Tên đăng nhập hoặc mật khẩu không đúng
         </div>
-        
+
         <form th:action="@{/login}" method="post">
             <div class="form-group">
                 <label for="username">Tên đăng nhập</label>
                 <input type="text" id="username" name="username" required autofocus>
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Mật khẩu</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            
+
             <button type="submit">Đăng nhập</button>
         </form>
     </div>

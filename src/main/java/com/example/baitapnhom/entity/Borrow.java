@@ -25,6 +25,7 @@ public class Borrow {
     private Book book;
 
     private LocalDateTime borrowTime;
+    private LocalDateTime returnTime;
 }
 
 

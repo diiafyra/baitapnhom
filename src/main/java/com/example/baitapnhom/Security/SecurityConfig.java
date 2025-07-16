@@ -25,7 +25,8 @@ public class SecurityConfig {
                         .requestMatchers("/books/add").hasRole("ADMIN")
                         .requestMatchers("/books/borrow/**").hasRole("USER")
                         .requestMatchers("/books/{id}").hasRole("ADMIN")
-                        .requestMatchers("/books").hasRole("USER")
+                        .requestMatchers("/books").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/books/return/**").hasRole("USER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

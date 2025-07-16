@@ -28,7 +28,6 @@ public class LoginController {
 
     @PostMapping("/register")
     public String processRegister(@ModelAttribute User user) {
-        user.setRole("ROLE_USER"); // mặc định là USER
         userService.register(user); // lưu và mã hóa mật khẩu
         return "redirect:/login?registered";
     }

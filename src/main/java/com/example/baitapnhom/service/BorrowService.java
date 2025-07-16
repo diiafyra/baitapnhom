@@ -1,6 +1,8 @@
 package com.example.baitapnhom.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -24,9 +26,29 @@ public class BorrowService {
         Book book = bookRepo.findById(bookId).orElseThrow();
         User user = userRepo.findById(username).orElseThrow();
 
-        Borrow borrow = new Borrow(null, user, book, LocalDateTime.now());
+        Borrow borrow = new Borrow(null, user, book, LocalDateTime.now(), null);
         borrowRepo.save(borrow);
         book.setAvailable(false);
         bookRepo.save(book);
     }
+
+    public List<Borrow> getBorrowsByUsername(String username) {
+        return borrowRepo.findByUser_Username(username);
+    }
+
+    public void returnBook(Long borrowId) {
+        Optional<Borrow> optional = borrowRepo.findById(borrowId);
+        if (optional.isPresent()) {
+            Borrow borrow = optional.get();
+            if (borrow.getReturnTime() == null) {
+                borrow.setReturnTime(LocalDateTime.now());
+                borrowRepo.save(borrow);
+            }
+        }
+    }
+
+    public List<Borrow> getAllBorrows() {
+        return borrowRepo.findAll();
+    }
+
 }

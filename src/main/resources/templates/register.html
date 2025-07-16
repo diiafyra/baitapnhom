@@ -1,21 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Đăng ký</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-        body { font-family: Arial; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f7f7f7; }
-        .register-form { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 0 10px #ccc; width: 350px; }
-        input, button { width: 100%; margin: 0.5rem 0; padding: 0.8rem; font-size: 1rem; }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #74ebd5, #acb6e5);
+        padding: 20px;
+      }
+
+      .register-form {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 400px;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #2c3e50;
+      }
+
+      input,
+      select,
+      button {
+        width: 100%;
+        margin: 0.75rem 0;
+        padding: 0.9rem;
+        font-size: 1rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: #3498db;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        outline: none;
+      }
+
+      button {
+        background-color: #3498db;
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      p {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.95rem;
+      }
+
+      a {
+        color: #3498db;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 480px) {
+        .register-form {
+          padding: 1.5rem;
+        }
+      }
     </style>
-</head>
-<body>
-    <form class="register-form" th:action="@{/register}" method="post" th:object="${user}">
-        <h2>Đăng ký</h2>
-        <input type="text" placeholder="Tên đăng nhập" th:field="*{username}" required />
-        <input type="password" placeholder="Mật khẩu" th:field="*{password}" required />
-        <button type="submit">Đăng ký</button>
-        <p><a th:href="@{/login}">Quay lại đăng nhập</a></p>
+  </head>
+  <body>
+    <form
+      class="register-form"
+      th:action="@{/register}"
+      method="post"
+      th:object="${user}"
+    >
+      <h2>Đăng ký</h2>
+
+      <input
+        type="text"
+        placeholder="Tên đăng nhập"
+        th:field="*{username}"
+        required
+      />
+
+      <input
+        type="password"
+        placeholder="Mật khẩu"
+        th:field="*{password}"
+        required
+      />
+
+      <select th:field="*{role}" required>
+        <option value="" disabled selected>Chọn vai trò</option>
+        <option value="USER">Người dùng</option>
+        <option value="ADMIN">Quản trị viên</option>
+      </select>
+
+      <button type="submit">Đăng ký</button>
+
+      <p><a th:href="@{/login}">Quay lại đăng nhập</a></p>
     </form>
-</body>
+  </body>
 </html>

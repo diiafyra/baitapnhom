@@ -20,4 +20,11 @@ public class BorrowApiController {
         borrowService.borrowBook(principal.getName(), id);
         return "redirect:/books";
     }
+
+    @PostMapping("/books/return/{id}")
+    public String returnBook(@PathVariable Long id) {
+        borrowService.returnBook(id);
+        return "redirect:/books";
+    }
+
 }

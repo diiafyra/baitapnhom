@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.baitapnhom.entity.Book;
 import com.example.baitapnhom.service.BookService;
+import com.example.baitapnhom.service.BorrowService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,15 +19,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookWebController {
     private final BookService bookService;
+    private final BorrowService borrowService;
 
     @GetMapping("/books")
     public String list(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("Người dùng hiện tại: " + auth.getName());
+        String username = auth.getName();
+        System.out.println("Người dùng hiện tại: " + username);
         System.out.println("Quyền (role): " + auth.getAuthorities());
+
         model.addAttribute("books", bookService.getAllBooks());
+
+        model.addAttribute("borrows", borrowService.getBorrowsByUsername(username));
+
         return "books";
     }
+
 
     @GetMapping("/books/add")
     public String addForm(Model model) {

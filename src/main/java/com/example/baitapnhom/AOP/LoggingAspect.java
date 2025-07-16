@@ -8,12 +8,22 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class LoggingAspect {
+
     @Around("execution(* com.example.baitapnhom.service.BorrowService.borrowBook(..))")
-    public Object logExecution(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object logBorrowExecution(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         Object proceed = joinPoint.proceed();
         long end = System.currentTimeMillis();
-        System.out.println("Thời gian mượn sách: " + (end - start) + "ms");
+        System.out.println("THOI GIAN THUC HIEN MUON SACH: " + (end - start) + "ms");
         return proceed;
-    } 
+    }
+
+    @Around("execution(* com.example.baitapnhom.service.BorrowService.returnBook(..))")
+    public Object logReturnExecution(ProceedingJoinPoint joinPoint) throws Throwable {
+        long start = System.currentTimeMillis();
+        Object proceed = joinPoint.proceed();
+        long end = System.currentTimeMillis();
+        System.out.println("THOI GIAN THUC HIEN TRA SACH: " + (end - start) + "ms");
+        return proceed;
+    }
 }
